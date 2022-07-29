@@ -15,7 +15,7 @@ def train(device):
     model.to(device)
     optimizer = torch.optim.Adam(model.parameters(), lr=1e-3, weight_decay=1e-5)
     criterion = torch.nn.MSELoss(reduction='mean')
-    num_epochs = 8
+    num_epochs = 3
     n_batches = int(len(cid)/batch_size) + 1
     batch_number = 0
     loss = None
