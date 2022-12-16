@@ -5,10 +5,9 @@ from sklearn.metrics import r2_score
 
 
 def test(device):
-    batch_size = 10
+    batch_size = 200
     cid = TocDataset(is_train=False)
     dataloader = DataLoader(cid, batch_size=batch_size, shuffle=True)
-    criterion = torch.nn.MSELoss(reduction='mean')
     model = torch.load("models/machine.h5")
     model.eval()
     model.to(device)

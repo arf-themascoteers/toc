@@ -20,8 +20,8 @@ for img in os.listdir(img_dir):
     img_path = os.path.join(img_dir, img)
     img = Image.open(img_path)
     image = np.asarray(img)
-    #image = image[400:-400,400:-400,:]
-    patches = my_patchify.patchify(image, (224,224), (112,112))
+    image = image[800:-800,800:-800,:]
+    patches = my_patchify.patchify(image, (128,128), (128,128))
     for i in patches:
         name = f"{index}.jpg"
         index = index + 1
