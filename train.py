@@ -7,7 +7,7 @@ from torch.utils.data import DataLoader
 from toc_machine import TocMachine
 
 def train(device):
-    batch_size = 100
+    batch_size = 50
     cid = TocDataset(is_train=True)
     dataloader = DataLoader(cid, batch_size=batch_size, shuffle=True)
     model = TocMachine()
