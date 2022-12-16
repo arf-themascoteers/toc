@@ -7,7 +7,7 @@ from torch.utils.data import DataLoader
 from toc_machine import TocMachine
 
 def train(device):
-    batch_size = 10
+    batch_size = 100
     cid = TocDataset(is_train=True)
     dataloader = DataLoader(cid, batch_size=batch_size, shuffle=True)
     model = TocMachine()
@@ -15,7 +15,7 @@ def train(device):
     model.to(device)
     optimizer = torch.optim.Adam(model.parameters(), lr=1e-3, weight_decay=1e-5)
     criterion = torch.nn.MSELoss(reduction='mean')
-    num_epochs = 10
+    num_epochs = 3
     n_batches = int(len(cid)/batch_size) + 1
     batch_number = 0
     loss = None
