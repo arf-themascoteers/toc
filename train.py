@@ -7,7 +7,7 @@ from torch.utils.data import DataLoader
 from toc_machine import TocMachine
 
 def train(device):
-    batch_size = 300
+    batch_size = 10
     cid = TocDataset(is_train=True)
     dataloader = DataLoader(cid, batch_size=batch_size, shuffle=True)
     model = TocMachine()
@@ -15,7 +15,7 @@ def train(device):
     model.to(device)
     optimizer = torch.optim.Adam(model.parameters(), lr=1e-3, weight_decay=1e-5)
     criterion = torch.nn.MSELoss(reduction='mean')
-    num_epochs = 3
+    num_epochs = 10
     n_batches = int(len(cid)/batch_size) + 1
     batch_number = 0
     loss = None
@@ -36,6 +36,7 @@ def train(device):
 
     print("Train done")
     torch.save(model, 'models/machine.h5')
+
 
 if __name__ == "__main__":
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")

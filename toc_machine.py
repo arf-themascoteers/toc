@@ -1,23 +1,22 @@
 import torch.nn as nn
 import torch.nn.functional as F
+from torchvision.models import resnet50, ResNet50_Weights
 
 
 class TocMachine(nn.Module):
     def __init__(self):
         super().__init__()
-        self.machine = nn.Sequential(
-            nn.Conv2d(3, 16, (16,16)),
+        self.resnet = resnet50(weights=ResNet50_Weights.DEFAULT)
+        number_input = self.resnet.fc.in_features
+        self.resnet.fc = nn.Sequential(
+            nn.Linear(number_input, 256),
+            nn.BatchNorm1d(256),
             nn.ReLU(),
-            nn.MaxPool2d(kernel_size=(8, 8)),
-            nn.MaxPool2d(kernel_size=(4, 4)),
-            nn.Flatten(),
-            nn.Linear(784, 16),
-            nn.ReLU(),
-            nn.Linear(16, 1)
+            nn.Linear(256, 1)
         )
 
 
     def forward(self, x):
-        x = self.machine(x)
+        x = self.resnet(x)
         return x
 

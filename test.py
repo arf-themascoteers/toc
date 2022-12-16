@@ -26,6 +26,7 @@ def test(device):
             predicted = y_hat[i]
             print(f"{gt_val:.4f}\t\t\t\t{predicted:.4f}")
 
+
 if __name__ == "__main__":
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     test(device)
