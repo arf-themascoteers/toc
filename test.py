@@ -1,10 +1,11 @@
 import torch
 from toc_dataset import TocDataset
 from torch.utils.data import DataLoader
+from sklearn.metrics import r2_score
 
 
 def test(device):
-    batch_size = 300
+    batch_size = 50
     cid = TocDataset(is_train=False)
     dataloader = DataLoader(cid, batch_size=batch_size, shuffle=True)
     criterion = torch.nn.MSELoss(reduction='mean')
@@ -13,18 +14,20 @@ def test(device):
     model.to(device)
     correct = 0
     total = 0
+    ys = []
+    yhats = []
     for (x, y) in dataloader:
         x = x.to(device)
         y = y.to(device)
         y_hat = model(x)
         y_hat = y_hat.reshape(-1)
-        loss = criterion(y_hat, y)
-        print(f"Loss:{loss.item():.4f}")
-        print("Ground Truth\t\tPredicted")
-        for i in range(y_hat.shape[0]):
-            gt_val = y[i]
-            predicted = y_hat[i]
-            print(f"{gt_val:.4f}\t\t\t\t{predicted:.4f}")
+        for ay in y:
+            ys.append(ay)
+        for ayhat in y_hat:
+            yhats.append(ayhat)
+
+    r2 = r2_score(ys, yhats)
+    print(r2)
 
 
 if __name__ == "__main__":
